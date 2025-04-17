@@ -11,16 +11,13 @@ class Solution:
             cur = cur.next
             length += 1
         target = length - n
+        dummyNode = ListNode()
+        dummyNode.next = head
+        prev, cur = dummyNode, head
         i = 0
-
-        dummy = ListNode()
-        dummy.next = head
-        prev, current = dummy, head
-        i = 0 
-        while current.next and i < target:
-            prev = current
-            current = current.next
+        while cur.next and i < target:
+            prev = cur
+            cur = cur.next
             i += 1
-        prev.next = current.next
-        return dummy.next
-        
+        prev.next = cur.next
+        return dummyNode.next
