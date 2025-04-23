@@ -1,8 +1,7 @@
 class Solution:
     def isValid(self, s: str) -> bool:
         stk = []
-        m = { ")": "(",  "}" : "{", "]" : "["}        
-
+        m = {")":"(", "}":"{", "]":"["}
         for c in s:
             if c in m:
                 if stk and stk[-1] == m[c]:
@@ -11,4 +10,4 @@ class Solution:
                     return False
             else:
                 stk.append(c)
-        return True if not stk else  False
+        return True if not stk else False
