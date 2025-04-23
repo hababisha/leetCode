@@ -1,22 +1,21 @@
 class Solution:
     def isValid(self, s: str) -> bool:
-        stk = []
-        m = {")":"(",
-             "]":"[",
-             "}":"{"}
+        stack = []
+        open = ['[', '{', '(']
+        hashMap = {'}' : '{', ']' : '[', ')' : '('}
         for c in s:
-            if c in m:
-                if stk and stk[-1]==m[c]:
-                    stk.pop()
+            if c in open:
+                stack.append(c)
+            else:
+                if not stack:
+                    return False
+                if stack[-1] == hashMap[c]:
+                    stack.pop()
                 else:
                     return False
-            else:
-                stk.append(c)
-
-        return True if not stk else False
-        
-
-        
+        if stack:
+            return False
+        return True
             
                     
         
