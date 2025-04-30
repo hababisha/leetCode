@@ -1,11 +1,18 @@
 class Solution:
-  def nextGreaterElement(self, nums1: list[int], nums2: list[int]) -> list[int]:
-    numToNextGreater = {}
-    stack = []  
+    def nextGreaterElement(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        monoInc, monoDec = [], []
 
-    for num in nums2:
-      while stack and stack[-1] <= num:
-        numToNextGreater[stack.pop()] = num
-      stack.append(num)
-
-    return [numToNextGreater.get(num, -1) for num in nums1]
+        nextMap = defaultdict(lambda: -1)
+        for n in nums2:
+            while monoDec and monoDec[-1] < n:
+                nextMap[monoDec.pop()] = n
+            
+            if monoInc and monoInc[-1] < n:
+                nextMap[monoInc.pop()] = n
+            
+            monoInc.append(n)
+        
+        res = []
+        for n in nums1:
+            res.append(nextMap[n])
+        return res
