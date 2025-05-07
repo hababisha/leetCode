@@ -1,21 +1,18 @@
 class Solution:
     def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
-        m = len(matrix)
-        n = len(matrix[0])
-        t = m*n
-        l = 0
-        r = t -1
-        
-        while l <= r:
-            m = (l+r) // 2 
-            i = m//n
-            j = m%n
-            mid_num = matrix[i][j]
-            if target == mid_num:
+        def binarySearch(self, rows, targ):
+            l=0
+            r= len(rows) - 1
+
+            while l <= r:
+                mid = (l+r) // 2
+                if rows[mid] == targ:
+                    return True
+                elif targ < rows[mid]:
+                    r = mid - 1
+                else:
+                    l = mid + 1
+        for r in matrix:
+            if binarySearch(self, r, target):
                 return True
-            elif target < mid_num:
-                r = m - 1
-            else:
-                l = m+1
         return False
-        
