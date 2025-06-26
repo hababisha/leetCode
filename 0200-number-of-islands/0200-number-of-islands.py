@@ -1,33 +1,22 @@
 class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
-        if not grid:
-            return 0
+        m, n = len(grid), len(grid[0])
 
-        rows, cols = len(grid), len(grid[0])
-        visit = set()
-        islands = 0
+        def dfs(i,j):
+            if i < 0 or i >= m or j < 0 or j >= n or grid[i][j] != "1":
+                return
+            else:
+                grid[i][j] = "0"
+                dfs(i,j+1)
+                dfs(i+1, j)
+                dfs(i, j-1)
+                dfs(i-1, j)
 
-        def bfs(r,c):
-            q = collections.deque()
-            visit.add((r,c))
-            q.append((r,c))
+        num_islands = 0
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == "1":
+                    num_islands += 1
+                    dfs(i,j)
 
-            while q:
-                row,col = q.popleft()
-                directions = [[1,0], [-1,0], [0,1], [0,-1]]
-                for dr, dc in directions:
-                    r, c = row+dr, col+dc
-                    if (r in range(rows) and 
-                        c in range(cols) and
-                        grid[r][c] == "1" and
-                        (r, c) not in visit):
-                        q.append((r,c))
-                        visit.add((r,c))
-        for r in range(rows):
-            for c in range(cols):
-                if grid[r][c] == "1" and (r,c) not in visit:
-                    bfs(r,c)
-                    islands += 1
-        return islands
-
-
+        return num_islands
