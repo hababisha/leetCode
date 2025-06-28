@@ -11,11 +11,13 @@ class Solution:
         def inorder(root):
             if not root:
                 return
+
             inorder(root.left)
             arr.append(root.val)
             inorder(root.right)
+        
         inorder(root)
-        for i in range(1,len(arr)):
-            if arr[i] <= arr[i-1]:
+        for i in range(1, len(arr)):
+            if arr[i] < arr[i-1]:
                 return False
         return True
