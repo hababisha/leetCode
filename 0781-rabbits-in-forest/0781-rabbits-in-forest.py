@@ -1,7 +1,12 @@
 class Solution:
     def numRabbits(self, answers: List[int]) -> int:
-        mpp = Counter(answers)
-        total = 0
-        for x in mpp:
-            total += ceil(float(mpp[x]) / (x + 1)) * (x + 1)
-        return int(total)
+        freq = Counter(answers)
+        r = 0
+        for n in freq:
+            if freq[n] < (n+1):
+                r = r + n + 1
+            else:
+                r += math.ceil(freq[n]/(n+1)) * (n+1)
+
+
+        return r
