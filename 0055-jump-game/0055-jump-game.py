@@ -1,7 +1,7 @@
 class Solution:
     def canJump(self, nums: List[int]) -> bool:
-        lastgoodidxpos = len(nums) - 1
-        for i in range(len(nums) - 1, -1, -1):
-            if i + nums[i] >= lastgoodidxpos:
-                lastgoodidxpos = i
-        return lastgoodidxpos == 0
+        lgi = len(nums) - 1
+        for i in range(len(nums)-1, -1,-1):
+            if nums[i] + i >= lgi:
+                lgi = i
+        return lgi == 0
