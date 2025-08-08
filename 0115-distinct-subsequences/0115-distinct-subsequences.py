@@ -11,7 +11,7 @@ class Solution:
                 if s[i] == t[j]:
                     memo[(i,j)]= dp(i+1,j+1) + dp(i+1, j)
                 else:
-                    memo[(i,j)] = dp(i+i, j)
+                    memo[(i,j)] = dp(i+1, j)
             return memo[(i,j)]
         
         return dp(0,0)
