@@ -1,15 +1,16 @@
 class Solution:
     def isSubsequence(self, s: str, t: str) -> bool:
-        memo = {}
+        m, n = len(s), len(t)
+        dp = [[False] * (n + 1) for _ in range(m + 1)]
 
-        def dp(i,j) :
-            if i == len(s):
-                return True
-            if j == len(t):
-                return False
-            if s[i] == t[j]:
-                return dp(i+1, j+1)
-            if s[i] != t[j]:
-                return dp(i, j+1)
-            return False
-        return dp(0,0)
+        for j in range(n + 1):
+            dp[m][j] = True
+
+        for i in range(m - 1, -1, -1):
+            for j in range(n - 1, -1, -1):
+                if s[i] == t[j]:
+                    dp[i][j] = dp[i + 1][j + 1]
+                else:
+                    dp[i][j] = dp[i][j + 1]
+
+        return dp[0][0]
