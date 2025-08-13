@@ -5,22 +5,23 @@ class Solution:
 
         graph = defaultdict(list)
 
-        for u, v in edges:
+        for u,v in edges:
             graph[u].append(v)
             graph[v].append(u)
-        
+
         seen = set()
         seen.add(source)
-        
-        def dfs(i):
-            if i == destination:
+        q = deque()
+        q.append(source)
+
+        while q:
+            node = q.popleft()
+            if node == destination:
                 return True
             
-            for nei in graph[i]:
+            for nei in graph[node]:
                 if nei not in seen:
                     seen.add(nei)
-                    if dfs(nei):
-                        return True
-            return False
+                    q.append(nei)
 
-        return dfs(source)
+        return False
