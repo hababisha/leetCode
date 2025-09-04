@@ -4,18 +4,19 @@ class Solution:
         incoming = defaultdict(int)
 
         for u,v in prerequisites:
-            graph[u].append(v)
-            incoming[v] += 1
+            graph[v].append(u)
+            incoming[u] += 1
+        
         q = deque()
         for i in range(numCourses):
             if incoming[i] == 0:
                 q.append(i)
         order = []
         while q:
-            crs = q.popleft()
-            order.append(crs)
+            node = q.popleft()
+            order.append(node)
 
-            for nei in graph[crs]:
+            for nei in graph[node]:
                 incoming[nei] -= 1
                 if incoming[nei] == 0:
                     q.append(nei)
