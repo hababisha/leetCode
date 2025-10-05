@@ -2,6 +2,7 @@ class TrieNode:
     def __init__(self):
         self.children = [None for _ in range(26)]
         self.is_end = False
+
 class WordDictionary:
 
     def __init__(self):
@@ -13,31 +14,26 @@ class WordDictionary:
             idx = ord(c) - ord('a')
             if not cur.children[idx]:
                 cur.children[idx] = TrieNode()
-
             cur = cur.children[idx]
         cur.is_end = True
 
-
     def search(self, word: str) -> bool:
-        return self.helper(0, word, self.root)
-    
-    def helper(self,i , word, cur):
-        if i >= len(word):
+        def dfs(j, root):
+            if not root:
+                return False
+            cur = root
+            for i in range(j, len(word)):
+                c = word[i]
+                if c == '.':
+                    for child in cur.children:
+                        if child and dfs(i + 1, child): 
+                            return True
+                    return False
+                else:
+                    idx = ord(c) - ord('a')
+                    if not cur.children[idx]:
+                        return False
+                    cur = cur.children[idx]
             return cur.is_end
-        res = False
-        if word[i] == '.':
-            for j in range(26):
-                if cur.children[j] and self.helper(i + 1, word, cur.children[j]):
-                    res = True
-        else:
-            j = ord(word[i]) - 97
-            if cur.children[j] and self.helper(i + 1, word, cur.children[j]):
-                res = True
-        return res
-        
 
-
-# Your WordDictionary object will be instantiated and called as such:
-# obj = WordDictionary()
-# obj.addWord(word)
-# param_2 = obj.search(word)
+        return dfs(0, self.root)
