@@ -1,6 +1,6 @@
 class Solution:
     def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
-        def binarySearch(self, rows, targ):
+        def binarySearch(rows, targ):
             l=0
             r= len(rows) - 1
 
@@ -12,7 +12,8 @@ class Solution:
                     r = mid - 1
                 else:
                     l = mid + 1
+        
         for r in matrix:
-            if binarySearch(self, r, target):
+            if binarySearch(r, target):
                 return True
         return False
