@@ -1,18 +1,22 @@
 class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
-        dirs = [[0,1],[1,0],[0,-1],[-1,0]]
         m, n = len(grid), len(grid[0])
-        def inbound(r,c):
-            return 0 <= r < m and 0 <= c < n
-        
+        dirs = [(0,1), (1,0), (0,-1), (-1, 0)]
 
-        def dfs(r,c):
-            if not inbound(r,c) or grid[r][c] == "0":
+        def inbound(x,y):
+            return 0 <= x < m and 0 <= y < n
+
+        def dfs(i,j):
+            if not inbound(i,j) or grid[i][j] == "0":
                 return 0
-            grid[r][c] = "0"
-            for dr, dc in dirs:
-                nr, nc = dr+r, c+dc
-                dfs(nr, nc)
+            
+            grid[i][j] = "0"
+
+            for dx, dy in dirs:
+                nx, ny = dx + i, dy + j
+                dfs(nx, ny)
+
+
         ans = 0
         for r in range(m):
             for c in range(n):
