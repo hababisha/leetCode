@@ -6,11 +6,9 @@ class Solution:
             if parent[c] != c:
                 parent[c] = find(parent[c])
             return parent[c]
-        
         def union(c1, c2):
             p1, p2 = find(c1), find(c2)
-            parent[p2] = p1
-        
+            parent[p1] = p2
         for u,v in edges:
             if find(u) == find(v):
                 return [u,v]
