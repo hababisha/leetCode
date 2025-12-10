@@ -1,19 +1,22 @@
 class Solution:
     def minEatingSpeed(self, piles: List[int], h: int) -> int:
-        def helper(m):
-            s = 0
-            for n in piles:
-                s += math.ceil(n/m)
-            return s <= h
-        l, r = 1, max(piles)
+        #  [3,6,7,11], h = 8
+        # 1 
+        # 11 max(piles) 
+        def sheCanEat(m):
+            c=0
+            for p in piles:
+                c  += math.ceil(p / m)
+            return c <= h
+        l, r= 1, max(piles)
+
         ans = -1
         while l <= r:
-            mid = l + (r-l) // 2
-            if helper(mid):
-                ans = mid
-                r = mid - 1
+            m = (l + r) // 2
+            if sheCanEat(m):
+                ans  = m
+                r = m - 1
             else:
-                l = mid + 1
+                l  = m + 1
+            
         return ans
-
-
