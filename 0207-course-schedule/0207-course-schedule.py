@@ -6,11 +6,12 @@ class Solution:
         for u,v in prerequisites:
             graph[v].append(u)
             incoming[u] += 1
-        
+
         q = deque()
         for i in range(numCourses):
             if incoming[i] == 0:
                 q.append(i)
+                
         order = []
         while q:
             node = q.popleft()
