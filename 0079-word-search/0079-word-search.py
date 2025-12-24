@@ -1,32 +1,27 @@
-from typing import List
-
 class Solution:
     def exist(self, board: List[List[str]], word: str) -> bool:
-        rows, cols = len(board), len(board[0])
-        
-        def dfs(i, j, k, visited):
+        m, n = len(board), len(board[0])
+        dirs = [[1,0], [-1,0], [0,-1], [0,1]]
+        visit = set()
+        def inbound(i,j):
+            return 0 <= i < m and 0 <= j < n
+        def bt(i,j,k):
             if k == len(word):
                 return True
-            if (i < 0 or i >= rows or 
-                j < 0 or j >= cols or 
-                (i, j) in visited or 
-                board[i][j] != word[k]):
+            if not inbound(i,j) or (i,j) in visit or board[i][j] != word[k]:
                 return False
 
-            visited.add((i, j))
-
-            res = (
-                dfs(i + 1, j, k + 1, visited) or
-                dfs(i - 1, j, k + 1, visited) or
-                dfs(i, j + 1, k + 1, visited) or
-                dfs(i, j - 1, k + 1, visited)
-            )
-
-            visited.remove((i, j))
-            return res
-
-        for i in range(rows):
-            for j in range(cols):
-                if dfs(i, j, 0, set()):
+            visit.add((i,j))
+            for dr, dc in dirs:
+                nr,nc = dr + i, dc + j
+                if bt(nr,nc,k+1):
                     return True
+            visit.remove((i,j))
+
+            return False
+        for r in range(m):
+            for c in range(n):
+                if bt(r,c,0):
+                    return True
+                visit = set()
         return False
