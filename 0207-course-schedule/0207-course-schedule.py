@@ -1,24 +1,34 @@
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        graph = defaultdict(list)
-        incoming = defaultdict(int)
+        g = defaultdict(list)
+        courses = prerequisites
 
-        for u,v in prerequisites:
-            graph[v].append(u)
-            incoming[u] += 1
+        for a, b in courses:
+            g[a].append(b)
 
-        q = deque()
+        
+        unvisited = 0
+        visiting = 1
+        visited = 2
+
+        states = [unvisited] * numCourses
+
+        def dfs(node):
+            state = states[node]
+            if state == visited: return True
+            elif state == visiting: return False
+
+            states[node] = visiting
+
+            for nei in g[node]:
+                if not dfs(nei):
+                    return False
+            
+            states[node] = visited
+            return True
+
         for i in range(numCourses):
-            if incoming[i] == 0:
-                q.append(i)
-                
-        order = []
-        while q:
-            node = q.popleft()
-            order.append(node)
-
-            for nei in graph[node]:
-                incoming[nei] -= 1
-                if incoming[nei] == 0:
-                    q.append(nei)
-        return len(order) == numCourses
+            if not dfs(i):
+                return False
+        
+        return True
