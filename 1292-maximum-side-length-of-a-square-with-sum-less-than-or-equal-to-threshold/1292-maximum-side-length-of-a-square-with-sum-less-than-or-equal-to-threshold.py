@@ -11,8 +11,8 @@ class Solution:
         ans = min(m,n)
         print(pref)
         while ans:
-            for i in range(ans, m):
-                for j in range(ans, n):
+            for i in range(ans, m+1):
+                for j in range(ans, n+1):
                     left = pref[i][j-ans]
                     top = pref[i-ans][j]
                     topleft = pref[i-ans][j-ans]
