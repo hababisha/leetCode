@@ -1,11 +1,12 @@
 class Solution:
     def sortColors(self, nums: List[int]) -> None:
-        bucket = [0] * 3
-        for c in nums:
-            bucket[c] += 1
-        
-        r, w, b = bucket
-        nums[:r] = [0] * r
-        nums[r:r+w] = [1] * w
-        nums[r+w:] = [2] * b
-                
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        for i in range(len(nums)):
+            minIdx = i
+            for j in range(i+1, len(nums)):
+                if nums[j] < nums[minIdx]:
+                    minIdx = j
+
+            nums[i], nums[minIdx] = nums[minIdx], nums[i]          
