@@ -1,9 +1,11 @@
 class Solution:
     def sortColors(self, nums: List[int]) -> None:
-        """
-        Do not return anything, modify nums in-place instead.
-        """
-        for i in range(len(nums)):
-            for j in range(len(nums) - i - 1):
-                if nums[j+1] < nums[j]:
-                    nums[j+1], nums[j] = nums[j], nums[j+1]
+        bucket = [0] * 3
+        for c in nums:
+            bucket[c] += 1
+        
+        r, w, b = bucket
+        nums[:r] = [0] * r
+        nums[r:r+w] = [1] * w
+        nums[r+w:] = [2] * b
+                
