@@ -3,15 +3,15 @@ class Solution:
         l, r = max(weights), sum(weights)
         ans = r 
         def canShip(cap):
-            days_used = 1
-            curW = 0
-            for w in weights:
-                if curW + w > cap:
-                    days_used += 1
-                    curW = 0
-                curW += w
-            return days_used <= days
+            ships = 1
+            curCapacity = cap
 
+            for w in weights:
+                if curCapacity - w < 0:
+                    ships += 1
+                    curCapacity = cap
+                curCapacity -= w
+            return ships <= days
         while l <= r:
             cap = (l + r) // 2
             if canShip(cap):
