@@ -1,30 +1,23 @@
 class Solution:
-    def black_box(self, capacity, weights, given_days):
-        curr_capacity = 0
-        W = len(weights)
-        days_cout = 1
-
-        for index in range(W):
-            if curr_capacity + weights[index] > capacity:
-                curr_capacity = weights[index]
-                days_cout += 1
-            else:
-                curr_capacity += weights[index]
-
-        return days_cout > given_days
-
     def shipWithinDays(self, weights: List[int], days: int) -> int:
-        low = max(weights)
-        high = sum(weights)
-        ans = high
+        l, r = max(weights), sum(weights)
+        ans = r 
+        def canShip(cap):
+            days_used = 1
+            curW = 0
+            for w in weights:
+                if curW + w > cap:
+                    days_used += 1
+                    curW = 0
+                curW += w
+            return days_used <= days
 
-        while low <=high:
-            capacity = (low + high) // 2
-            if self.black_box(capacity, weights, days):
-                low = capacity + 1
+        while l <= r:
+            cap = (l + r) // 2
+            if canShip(cap):
+                ans = cap
+                r = cap - 1
+            
             else:
-                ans = min(capacity, ans)
-                high = capacity - 1
-
+                l = cap + 1
         return ans
-
